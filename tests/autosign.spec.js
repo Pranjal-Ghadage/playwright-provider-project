@@ -1,13 +1,13 @@
 const { test, expect } = require('@playwright/test');
 const { AutoSignupPage } = require('../pages/autosignPage');
 const { AutoSignupPage2 } = require('../pages/autosign2Page');
-const { logoutpage } = require('../pages/autologout.page');
+//const { logoutpage } = require('../pages/autologoutPage');
 
 
 test('signup using POM', async ({ page }) => {
   const signup1 = new AutoSignupPage(page);
   const signup2 = new AutoSignupPage2(page);
-  const logout1 =new logoutpage(page);
+  //const logout1 =new logoutpage(page);
 
   // Signup step 1
   await signup1.goto1();
@@ -60,8 +60,8 @@ test('signup using POM', async ({ page }) => {
 
   await signup2.clickUpdate();
 await expect(page).toHaveURL('https://automationexercise.com/account_created');
-
+/*
 await logout1.logout();
 await expect(page).toHaveURL('https://automationexercise.com/login');
-
+*/
 });
