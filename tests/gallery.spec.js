@@ -30,7 +30,7 @@ test.describe("provider gallery", () => {
     await gall.gotogallery();
     await gall.list();
        await page.waitForTimeout(30000);
-     const beforeCount = await gall.getCount();
+     const beforeCount = await gall.getCount();s
 
     await gall.addgall();
    await page.waitForTimeout(30000);
