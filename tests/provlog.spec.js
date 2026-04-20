@@ -10,18 +10,28 @@ test.describe("Provider Login", () => {
   test.beforeEach(async ({ page }) => {
     log = new provLogPage(page);
     dash = new provdashPage(page);
+    
     await log.goto();
   });
+test("valid login", async ({ page }) => {
 
-  // ✅ VALID LOGIN
-  test("valid login", async ({ page }) => {
-    await log.login("neel@gmail.com", "Neel@123");
-    await log.clicksignin();
-    await expect(page).toHaveURL("https://biz-booster-provider-panel.vercel.app/", { timeout: 20000 });
-    await expect(log.dashboard).toBeVisible({ timeout: 30000 });
+  await log.handleLoginAlert();
 
-    //await expect(page.locator("text=Dashboard")).toBeVisible();
-  });
+  await log.login("neel@gmail.com", "Neel@123");
+
+  // ✅ FIX: click BEFORE signin
+  await log.clickRememberMe();
+
+  await log.clicksignin();
+
+  await expect(page).toHaveURL(
+    "https://biz-booster-provider-panel.vercel.app/",
+    { timeout: 20000 }
+  );
+
+  await expect(log.dashboard).toBeVisible({ timeout: 30000 });
+
+});
 
   // ❌ INVALID USERNAME
   test("invalid username", async ({ page }) => {

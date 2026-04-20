@@ -2,16 +2,15 @@ class galleryPage {
   constructor(page) {
     this.page = page;
 
-    // correct sidebar locators
     this.galleryMenu = page.getByRole('button', { name: 'Gallery' });
     this.addGallery = page.getByRole('link', { name: 'Add Gallery' });
-    this.gallList=page.getByRole('link', { name: 'Gallery List' });
+    this.gallList = page.getByRole('link', { name: 'Gallery List' });
+
     this.cards = page.locator("div.border.rounded.shadow");
 
-    // upload
     this.fileInput = page.locator('input[type="file"]');
     this.uploadBtn = page.getByRole('button', { name: 'Upload' });
-    
+
     this.successMsg = page.locator('text=success');
     this.errorMsg = page.locator('text=invalid');
   }
@@ -23,7 +22,8 @@ class galleryPage {
   async addgall() {
     await this.addGallery.click();
   }
-  async list(){
+
+  async list() {
     await this.gallList.click();
   }
 
@@ -36,15 +36,35 @@ class galleryPage {
     await this.fileInput.setInputFiles(files);
     await this.uploadBtn.click();
   }
-   async getCount() {
+
+  async getCount() {
     return await this.cards.count();
   }
 
-  async verifyImageAdded(beforeCount) {
+  async handleDialogs() {
+    this.page.on("dialog", async (dialog) => {
+      console.log("Dialog:", dialog.message());
+      await dialog.accept();
+    });
+  }
 
-    const afterCount = await this.cards.count();
+  async deleteImageByIndex(index) {
+    const card = this.cards.nth(index);
+    await card.locator("button", { hasText: "Delete" }).click();
+  }
 
-    await expect(afterCount).toBeGreaterThan(beforeCount);
+  async replaceImageByIndex(index, filePath) {
+    const card = this.cards.nth(index);
+
+    await card.locator("button", { hasText: "Replace" }).click();
+
+    const fileInput = card.locator('input[type="file"]');
+    await fileInput.setInputFiles(filePath);
+  }
+
+  async getImageSrcByIndex(index) {
+    const card = this.cards.nth(index);
+    return await card.locator("img").getAttribute("src");
   }
 }
 

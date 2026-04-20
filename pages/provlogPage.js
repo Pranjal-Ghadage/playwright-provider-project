@@ -7,7 +7,7 @@ class provLogPage {
         this.password=page.locator("//input[@placeholder='Enter your password']");
         this.signbutton=page.locator("//button[normalize-space()='Sign in']");
         this.dashboard=page.locator("text=Dashboard");
-
+this.rememberMeCheckbox = this.page.locator("input[type='checkbox']").first();
     }
     async goto(){
         await this.page.goto("https://biz-booster-provider-panel.vercel.app/signin");
@@ -40,6 +40,8 @@ class provLogPage {
   async verifyEmailFieldType() {
     await expect(this.username).toHaveAttribute("type", "email");
   }
-
+async clickRememberMe() {
+  await this.rememberMeCheckbox.check(); // ✅ enough
+}
 
 };module.exports={provLogPage};
