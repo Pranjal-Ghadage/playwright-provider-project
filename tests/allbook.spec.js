@@ -48,7 +48,7 @@ test.describe("booking",()=>{
     test("View booking", async ({ page }) => {
         await book.gotobooking();
         await book.clickallbookings();
-
+  await expect(book.viewFirstBookingBtn).toBeVisible();
        await allbook.clickViewFirstBooking();
        await allbook.verifyViewPageOpened();
     });

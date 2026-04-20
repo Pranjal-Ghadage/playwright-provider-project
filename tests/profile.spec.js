@@ -1,19 +1,19 @@
 const { test } = require('@playwright/test');
-const { LoginPage } = require('../pages/loginPage');
-const { DashboardPage } = require('../pages/dashboardPage');
+const { provLogPage } = require("../pages/provlogPage");
+const{provdashPage}=require("../pages/provdashPage");
 const { ProfilePage } = require('../pages/profilePage');
 
 test('Update full profile', async ({ page }) => {
-  const loginPage = new LoginPage(page);
-  const dashboardPage = new DashboardPage(page);
+  const log = new LoginPage(page);
+  const dash = new DashboardPage(page);
   const profilePage = new ProfilePage(page);
 
   // 1️ Login
-  await loginPage.goto();
-  await loginPage.login('neel@gmail.com', 'Neel@123');
+  await log.goto();
+  await log.login('neel@gmail.com', 'Neel@123');
 
   // 2️⃣ Go to profile page
-  await dashboardPage.gotoProfile();
+  await dash.gotoProfile();
 
   // 3️⃣ Wait for profile page
   await profilePage.waitForProfilePage();

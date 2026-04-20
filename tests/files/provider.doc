@@ -1,0 +1,319 @@
+SIGNUP
+REGISTER
+  DONE
+Each invalid field should show a specific validation message
+(e.g., Full Name required, Invalid email, Phone must be numeric, Passwords do not match)
+Only a generic "Registration failed" message is shown.
+No field-level validation messages are displayed.
+-------------------------------------------------------------------------------------------------------------------
+
+  DONE
+Actual Result:
+Store Info is saved successfully and user is moved to the next step.
+modulename, zone, logo , cover img fill kiya sirf and click on save store info its saving and going to next step
+-------------------------------------------------------------------------------------------------------------------
+
+ DONE
+empty data , if i click on register button its not showing any error msg
+-------------------------------------------------------------------------------------------------------------------
+STORE ...
+
+
+Expected Result:
+Validation messages should be shown for all required fields
+(e.g., Country required, Module Type required, Zone required).
+No validation or error message is displayed.
+Form does not guide the user.         DONE
+-------------------------------------------------------------------------------------------------------------------
+
+
+(e.g., "Image size should be less than X MB").
+System shows technical error:
+"413 Request Entity Too Large" with server HTML content.
+-------------------------------------------------------------------------------------------------------------------
+KYC
+
+System shows technical error: it need to show proper msg like img size is max
+"413 Request Entity Too Large" with server HTML content.s
+-------------------------------------------------------------------------------------------------------------------
+
+if i cmplt 2 process and dlt that provider from admin panel then i open app it displays this 
+-------------------------------------------------------------------------------------------------------------------
+
+If i complete 2 process and take back & reopen app cmplt 3rd step  and again reopen app it shows this screen again  DONE
+-------------------------------------------------------------------------------------------------------------------
+  
+me registration admin panel mdhun kel store info app mdhun n kyc admin panel tr mob la kyc incomplete dakhvtey
+-------------------------------------------------------------------------------------------------------------------
+
+ekada kyc cmplt keli nntr app reopen kla tr prt kyc krnyasathi yet ahe  DONE
+-------------------------------------------------------------------------------------------------------------------
+
+KYC complete zalyv admin jo prynt provider request accept nhi krt toprynt provider login nhi zala pahije
+
+-------------------------------------------------------------------------------------------------------------------
+PROFILE UPDATE
+
+
+module name not displaying
+-------------------------------------------------------------------------------------------------------------------
+
+gallary images not showing
+-------------------------------------------------------------------------------------------------------------------
+
+about us updated - give correct validation msg
+-------------------------------------------------------------------------------------------------------------------
+
+providerprofile updated- not showing proper validation msg
+-------------------------------------------------------------------------------------------------------------------
+
+login klyv bydefault store close hot open kl tr open nhi zal ani msg closed mhnun display zala
+-------------------------------------------------------------------------------------------------------------------
+
+number existing asel tr ha msg display hotoy ano update klyv 9 didits save hotyt
+-------------------------------------------------------------------------------------------------------------------
+
+after registration store email look like this. i enterd dmart@gmail.com 
+-------------------------------------------------------------------------------------------------------------------
+
+At the time of provider profile updating it saves blank fields, not proper mail, it takes 1 digit as a mob no
+-------------------------------------------------------------------------------------------------------------------
+
+store info me dmart@gmail.com enter kiya tha store info mdhe dmart dikh raha hai and update krtetime provider ka mail dikh raha hai
+-------------------------------------------------------------------------------------------------------------------
+
+                    
+about us me data remove kiya to ye msg dikh raha hai proper msg dikhna chahiye 
+-------------------------------------------------------------------------------------------------------------------
+
+cover img or baki documents update krte time ye error aa raha hai
+-------------------------------------------------------------------------------------------------------------------
+
+
+adhar card ekch image show hotey
+-------------------------------------------------------------------------------------------------------------------
+
+Gallery images ethun upload hotyt bt show kuthe hotyt? Admin panel mdhun me upload kelyt tepn ethe dist nhiyet ani ethun upload keleya admin panel mdhe dist nhiye.
+Gallary section ahe admin panel mdhe app mdhe pn add kr
+-------------------------------------------------------------------------------------------------------------------
+LOGIN
+
+dlt account  - user id pass i enterd it need to show user not found
+-------------------------------------------------------------------------------------------------------------------
+
+empty data , if i click on signin button its not showing any error msg
+-------------------------------------------------------------------------------------------------------------------
+
+Forgot password pending
+-------------------------------------------------------------------------------------------------------------------
+
+valid data ne login krtey bt ethe msg show hot nhiye login successfully ani login screen pn open hot nhiye. pn me back gheun app reopen kla tr to provider login houn tychi login screen distey
+
+-------------------------------------------------------------------------------------------------------------------
+PROFILE
+
+Provider ID should be displayed clearly in the profile header
+Example: Provider ID: FTP000148
+-------------------------------------------------------------------------------------------------------------------
+
+Expected Result:
+Updated profile photo should be displayed immediately
+in the profile header.(Old/default profile photo is still shown.)
+-------------------------------------------------------------------------------------------------------------------
+SERVICEMAN
+print error msg in correct format
+-------------------------------------------------------------------------------------------------------------------
+Full form fill kela with invalid data ani save krych try kel tr proper error display nhi hot invalid data mhnun fkt load hoty 504 error msg show hotoy
+-------------------------------------------------------------------------------------------------------------------
+select sathi option ala phije he bydefault display hoty
+-------------------------------------------------------------------------------------------------------------------
+full form fill kela invalid data sobt tr fkt password, conf pass ch error msg dakhvty baki kontych field sathi nhi dakhvt enter valid firstname, email, phone ,id num proper work krty fkt validation msg show ni hot alredy exist vale pn dakhvty
+-------------------------------------------------------------------------------------------------------------------
+     profile photo updated inside form but not here
+-------------------------------------------------------------------------------------------------------------------
+         At the time of updating serviceman it accepts empty data , digit, letters, special characters.
+-------------------------------------------------------------------------------------------------------------------
+      first time update kel hot te inside form outside pn update zal hot atta 2nd time update kel aat mdhe fkt update zal baher zal nhi sk00004 
+-------------------------------------------------------------------------------------------------------------------
+checkbox is not clickable dlt sathi option nhi . checkbox overlap hoty te design khali ghetli phije
+-------------------------------------------------------------------------------------------------------------------
+dropdown list alphabetically ali phije spelling mistk ahe 
+-------------------------------------------------------------------------------------------------------------------
+kontihi field ne space accept kla nhi phije
+all field mdhe-  allow nhi kel phije  username ne fkt letters ghetl phije baki digit special char   yasathi restrict kel pahije
+-------------------------------------------------------------------------------------------------------------------
+HELP & SUPPORT
+
+
+
+after clicking on it not redirecting mail page
+-------------------------------------------------------------------------------------------------------------------
+ADVERTISEMENTS
+
+upcoming adv sathi new section bnvych ahe te live mdhe distey
+
+its showing sts code need to show adv created successfully
+-------------------------------------------------------------------------------------------------------------------
+
+adv create zalyv ti screen back 
+nhi zali data pn remove nhi zala yvrch click klyv 1 advertize multiple time create zaliye ( adv admin panel mdhun approve keli trch ethe show hoil hitr nhi)
+-------------------------------------------------------------------------------------------------------------------
+
+
+Already inactive(delete) ahe ethe dlt button disabled disl phije
+-------------------------------------------------------------------------------------------------------------------
+      
+status nhi ethe add kr sts mhnje add create klyv tychi request approve krt nhi toprynt pending approve klyv  approved ynr.
+created updated date satrt n end date sarkhi show kr
+-------------------------------------------------------------------------------------------------------------------
+
+Advertisement mhun show kr ethe pn   DONE
+--------------------------------------------------------------------------------------------------------
+
+ 
+Categories nhi dist
+-------------------------------------------------------------------------------------------------------------------
+Favourite
+
+search button not clickable
+-------------------------------------------------------------------------------------------------------------------
+
+LEADS
+       asa    
+
+blank nhi disl pahije all cmplt te fields dislya phijet    DONE
+-------------------------------------------------------------------------------------------------------------------
+Menu
+
+Privacy policy, refund policy, cancellation policy section nhiyet yamdhe
+-------------------------------------------------------------------------------------------------------------------
+ACCOUNT INFORMATION 
+              DONE
+pay to fetchtrue pahije ethe as per provider panel
+-------------------------------------------------------------------------------------------------------------------
+DASHBOARD
+     HALF DONE
+total subscribed services , service managers, total bookings asa phije vrti FT Provider show hoty tithe chng kr sirana vichrun
+-------------------------------------------------------------------------------------------------------------------
+Notifications
+
+…………………………………………………………………………………………………………………………………….
+
+DELETE
+ delete account is pending
+………………………………………………………………………………………………………………
+Check all screenshots vrche
+
+Serviceman- identity type spelling mistk & order vise
+Subscribed serv spelling is right
+
+signin
+
+dlt user login zala nhi pahije
+user not found - invalid credential
+invalid password- invalid credential
+invalid mail- invalid credential
+forgot password pending
+
+signup
+registration failed- full name -354545  password- sne
+store name - digit, address,city,state,country-digit
+vrch sgl fill kel baki logo cover module type zone select nhi kla n save vr click kel tr msg show hot nhiye
+prov req approve kelyashivy login nhi zal pahije
+
+dlt accnt pending
+add promotion sts in profile
+
+
+profile
+about us null/empty asel n open krun empty add krych try kel tr kytr mssg show zala pahije
+(about us, profile chya page chya khali error show hotey mg error kshi disnr)
+
+store information font check in mob
+logo, cover, kyc documents existing dist nhit app mdhe
+
+store name -5678 asel tr update nhi zal pahije baki data 
+profile gallary madhun img addd hot nhit n te photos mdhe disyla pahije
+photos mdhle  images dlt n update nhi hot
+state, country filters
+
+
+
+
+
+
+
+
+dashboard- monthly sales, recent order, top service pending
+services- add filters and show services not category
+   remove update price of service at the time of subscribing
+subscribe serv kelyav tych banner static distyt
+
+my leads - all data changed
+inside lead- total, service total , grand total wrong
+customer details- show cmplt address
+servicemen- please accept lead first,,,, servicemen lead accept kelyashivy add nhi zala pahije
+adhar card num show zal pahije
+lead sts update- link not clickable document not opening
+PAC not working,  payment gateway pending
+payment request, verified view once only after its disabled
+lead completed popup msg fast display houn jatoy
+lead cmplt otp required...
+lead cancel .... lead cancle zalyv tiche sts update kru shkt nhi
+lead cmplt krun cancel krtana barobr hoty bt error msg nit display hot nhi n msg time vadgvl pahije
+new lead first disli pahije
+lead cancel hot nahiye
+lead cmplt zalyv update sts disable zal aphije
+note -no add on service check spelling of you
+add on service ?
+check transaction- pay to fetchtrue
+transaction summary- transaction type - cash in hand he smjl pahije,  time wrong download excel pending in all transaction
+ask about final receivable balance 
+provider payout klyv ti ammount kuth disnr kshi disnr check
+adv - 201 sts code display hotoy date wrong aprove nd dlt sts pending 
+admin n request reject keli tr prov open nhi zala pahije
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+

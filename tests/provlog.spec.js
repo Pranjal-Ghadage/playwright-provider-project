@@ -25,9 +25,7 @@ test("valid login", async ({ page }) => {
   await log.clicksignin();
 
   await expect(page).toHaveURL(
-    "https://biz-booster-provider-panel.vercel.app/",
-    { timeout: 20000 }
-  );
+    "https://biz-booster-provider-panel.vercel.app/",{ timeout: 20000 });
 
   await expect(log.dashboard).toBeVisible({ timeout: 30000 });
 
