@@ -3,17 +3,18 @@
 ## 📌 Project Overview
 
 This project is an end-to-end automation framework built using Playwright.
-It covers real-time scenarios like login, dashboard validation, and booking workflows.
+It covers real-time scenarios such as login, dashboard validation, and booking workflows.
 
-The framework follows a structured approach using Page Object Model (POM).
+The framework follows the **Page Object Model (POM)** design pattern to ensure better code reusability, maintainability, and scalability.
 
 ---
 
 ## 🚀 Tech Stack
 
-* Language: JavaScript
-* Automation Tool: Playwright
-* Design Pattern: Page Object Model (POM)
+* **Language:** JavaScript
+* **Automation Tool:** Playwright
+* **Design Pattern:** Page Object Model (POM)
+* **CI/CD:** GitHub Actions
 
 ---
 
@@ -22,10 +23,11 @@ The framework follows a structured approach using Page Object Model (POM).
 ```bash
 playwright-provider-project
 │
-├── tests/                 # Test files
-├── pages/                 # Page Object Model files
-├── downloads-pdf/         # Downloaded PDF files validation
-├── files-img/             # Image upload/download handling
+├── tests/              # Test files
+├── pages/              # Page Object Model files
+├── downloads/          # PDF download validation
+├── uploads/            # Image upload/download handling
+├── screenshots/        # Test reports / screenshots
 │
 ├── playwright.config.js
 ├── package.json
@@ -40,28 +42,37 @@ playwright-provider-project
 * ❌ Login error validation (invalid credentials, empty fields)
 * ⚠️ Alert handling (browser alerts, confirmations)
 * 📊 Dashboard validation
-* 📅 Booking functionality
+* 📅 Booking workflow automation
 * 📄 PDF download validation
-* 🖼️ Image upload/download handling
+* 🖼️ Image upload & download handling
+* ♻️ Reusable Page Object Model implementation
+
+---
+
+## 🔄 CI/CD (GitHub Actions)
+
+* Automated test execution on every push and pull request
+* Runs Playwright tests in CI environment
+* Uploads Playwright HTML report as artifact
 
 ---
 
 ## ⚙️ Setup & Installation
 
-### Clone repository
+### 1. Clone repository
 
 ```bash
 git clone https://github.com/Pranjal-Ghadage/playwright-provider-project.git
 cd playwright-provider-project
 ```
 
-### Install dependencies
+### 2. Install dependencies
 
 ```bash
 npm install
 ```
 
-### Install Playwright browsers
+### 3. Install Playwright browsers
 
 ```bash
 npx playwright install
@@ -71,11 +82,13 @@ npx playwright install
 
 ## ▶️ Run Tests
 
+Run all tests:
+
 ```bash
 npx playwright test
 ```
 
-Run specific file:
+Run specific test file:
 
 ```bash
 npx playwright test tests/login.spec.js
@@ -83,25 +96,42 @@ npx playwright test tests/login.spec.js
 
 ---
 
+## 📊 Test Report
+
+After execution:
+
+```bash
+npx playwright show-report
+```
+
+👉 Add screenshot of report below:
+
+```md
+![Playwright Report](./screenshots/report.png)
+```
+
+---
+
 ## 📌 Key Learning
 
-* Handling file downloads (PDF)
-* Handling image upload
-* Handling browser alerts and popups
-* Validating login errors and edge cases
-* Working with real application flows
-* Writing reusable automation code
+* Handling file downloads (PDF validation)
+* Handling image upload functionality
+* Working with browser alerts and popups
+* Validating login edge cases
+* Automating real-world user workflows
+* Writing maintainable and reusable automation code
 
 ---
 
 ## 🚧 Future Improvements
 
-* Add API automation
-* Add reporting
-* Improve folder structure
+* Add API automation tests
+* Integrate advanced reporting (Allure/HTML)
+* Add parallel execution
+* Improve framework scalability
 
 ---
 
 ## 👩‍💻 Author
 
-Pranjal Ghadage
+**Pranjal Ghadage**
