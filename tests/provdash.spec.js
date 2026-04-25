@@ -17,7 +17,7 @@ test.describe("provider dashboard",()=>{
   test("valid login", async ({ page }) => {
     await log.login("neel@gmail.com", "Neel@123");
     await log.clicksignin();
-        await expect(page).toHaveURL("https://biz-booster-provider-panel.vercel.app/");
+        await expect(page).toHaveURL("https://provider.fetchtrue.com/");
        await expect(dash.dashboardText).toBeVisible();
       await expect(dash.logo).toBeVisible();
           // Check menus

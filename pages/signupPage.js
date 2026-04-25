@@ -12,7 +12,7 @@ class signupPage {
 
   }
   async goto(){
-    await this.page.goto("https://biz-booster-provider-panel.vercel.app/signup");
+    await this.page.goto("https://provider.fetchtrue.com/signup");
   }
   async registration(fname,email,phno,pass,confirmpass){
    await this.fname.fill(fname);

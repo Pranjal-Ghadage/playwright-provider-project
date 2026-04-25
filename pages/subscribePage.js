@@ -1,71 +1,45 @@
 const { expect } = require('@playwright/test');
 
 class SubscribeServicePage {
-  constructor(page) {
-    this.page = page;
+    constructor(page) {
+        this.page = page;
 
-    // Dropdowns
-    this.moduleDropdown = page.locator('select[name="moduleId"]');
-    this.categoryDropdown = page.locator('select[name="categoryId"]');
-    this.subCategoryDropdown = page.locator('select[name="subCategoryId"]');
-
-    this.allServicesSection = page.getByText('All Services');
-  }
-
-  async goto() {
-    await this.page.goto(
-      'https://provider.fetchtrue.com/service-management/available-services'
-    );
-    await this.page.waitForLoadState('networkidle');
-    await expect(this.allServicesSection).toBeVisible();
-  }
-
-  async selectModule(module) {
-    await this.moduleDropdown.selectOption({ label: module });
-    await this.page.waitForTimeout(1000);
-  }
-
-  async selectCategory(category) {
-    await this.categoryDropdown.selectOption({ label: category });
-    await this.page.waitForTimeout(1000);
-  }
-
-  // 🔥 AUTO HANDLE SUBCATEGORY
-  async handleSubCategoryIfPresent(subCategory) {
-    if (await this.subCategoryDropdown.isVisible()) {
-      const optionsCount = await this.subCategoryDropdown.locator('option').count();
-
-      // If dropdown has real options
-      if (optionsCount > 1) {
-        await this.subCategoryDropdown.selectOption({ label: subCategory });
-        await this.page.waitForTimeout(1000);
-        return true;
-      }
+        // ✅ safer locator (waits for rows inside table)
+        this.rows = page.locator("tbody tr");
+        this.table = page.locator("table");
     }
-    return false;
-  }
 
-  // 🔥 Subscribe by Service Name
-  async subscribeService(serviceName) {
-    const serviceCard = this.page.locator('div', {
-      has: this.page.getByText(serviceName, { exact: true })
-    });
+    async goto() {
+        await this.page.goto(
+            "https://provider.fetchtrue.com/service-management/available-services"
+        );
 
-    const subscribeBtn = serviceCard.locator('button:has-text("Subscribe")');
+        // ✅ better than networkidle
+        await expect(this.table).toBeVisible();
+        await expect(this.rows.first()).toBeAttached({ timeout: 15000 });
+    }
 
-    await expect(subscribeBtn).toBeVisible();
-    await subscribeBtn.click();
-  }
+    async subscribeByIndex(index) {
+        const row = this.rows.nth(index);
 
-  async verifySubscribed(serviceName) {
-    const serviceCard = this.page.locator('div', {
-      has: this.page.getByText(serviceName, { exact: true })
-    });
+        await expect(row).toBeVisible({ timeout: 15000 });
 
-    await expect(
-      serviceCard.locator('button:has-text("Subscribed")')
-    ).toBeVisible();
-  }
+        const btn = row.locator('button:has-text("Subscribe")');
+
+        await expect(btn).toBeVisible({ timeout: 10000 });
+        await btn.click();
+    }
+
+    async unsubscribeByIndex(index) {
+        const row = this.rows.nth(index);
+
+        await expect(row).toBeVisible({ timeout: 15000 });
+
+        const btn = row.locator('button:has-text("Unsubscribe")');
+
+        await expect(btn).toBeVisible({ timeout: 10000 });
+        await btn.click();
+    }
 }
 
 module.exports = { SubscribeServicePage };

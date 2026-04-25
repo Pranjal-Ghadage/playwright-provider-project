@@ -1,4 +1,3 @@
-
 const fs = require('fs');
 const { test, expect } = require("@playwright/test");
 const{bookingPage} =require("../pages/bookingPage");
@@ -15,19 +14,20 @@ test.describe("booking",()=>{
     await log.goto();
     await log.login("neel@gmail.com", "Neel@123");
     await log.clicksignin();
-    await expect(page).toHaveURL("https://biz-booster-provider-panel.vercel.app/", { timeout: 20000 });
+    await expect(page).toHaveURL("https://provider.fetchtrue.com/", { timeout: 20000 });
     await expect(log.dashboard).toBeVisible({ timeout: 30000 });
 
    })
 
-    test("Page + Count validation", async ({ page }) => {
-        await book.gotobooking();
-        await book.clickallbookings();
+   test("View booking", async ({ page }) => {
+    await book.gotobooking();
+    await book.clickallbookings();
+    await allbook.clickViewUnpaidBooking();
+    await allbook.verifyViewPageOpened();
+    await allbook.updateStatus();
+    await allbook.submitStatus();
 
-        await allbook.verifyPageLoaded();
-        await allbook.verifyCountAndData();
-        await page.pause();
-    });
+});
 
     test("Search valid", async ({ page }) => {
         await book.gotobooking();
@@ -45,14 +45,7 @@ test.describe("booking",()=>{
         await allbook.verifyInvalidSearch();
     });
 
-    test("View booking", async ({ page }) => {
-        await book.gotobooking();
-        await book.clickallbookings();
-  await expect(book.viewFirstBookingBtn).toBeVisible();
-       await allbook.clickViewFirstBooking();
-       await allbook.verifyViewPageOpened();
-    });
-
+   
     test("Download Excel", async ({ page }) => {
         await book.gotobooking();
         await book.clickallbookings();

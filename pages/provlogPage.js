@@ -10,7 +10,7 @@ class provLogPage {
 this.rememberMeCheckbox = this.page.locator("input[type='checkbox']").first();
     }
     async goto(){
-        await this.page.goto("https://biz-booster-provider-panel.vercel.app/signin");
+        await this.page.goto("https://provider.fetchtrue.com/signin");
     }
     async login(username,password){
         await this.username.fill(username);

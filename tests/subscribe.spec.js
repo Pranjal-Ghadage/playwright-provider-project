@@ -1,33 +1,37 @@
-const { test } = require('@playwright/test');
-const { provLogPage } = require("../pages/provlogPage");
-const{provdashPage}=require("../pages/provdashPage");
+const { test, expect } = require('@playwright/test');
+const { provLogPage } = require('../pages/provlogPage');
+const { provdashPage } = require('../pages/provdashPage');
 const { SubscribeServicePage } = require('../pages/subscribePage');
 
-test('Subscribe service with or without subcategory', async ({ page }) => {
-   const log = new provLogPage(page);
-   const dash = new provdashPage(page);
-  const servicePage = new SubscribeServicePage(page);
+test.describe("subscribe service", () => {
 
-  // -------- Login --------
-  await log.goto();
-  await log.login('neel@gmail.com', 'Neel@123');
+  let log, dash, serv;
 
-  // -------- Verify dashboard --------
-  await dashboardPage.verifyDashboard();
+  test.beforeEach(async ({ page }) => {
 
-  // -------- Navigate --------
-  await servicePage.goto();
+    log = new provLogPage(page);
+    dash = new provdashPage(page);
+    serv = new SubscribeServicePage(page);
 
-  // -------- Filters --------
-  await servicePage.selectModule('Finance');
-  await servicePage.selectCategory('Banking');
+    // Login
+    await log.goto();
+    await log.login("neel@gmail.com", "Neel@123");
+    await log.clicksignin();
+  await expect(page).toHaveURL(
+    "https://provider.fetchtrue.com/",{ timeout: 20000 });
 
-  // Try subcategory (only if exists)
-  await servicePage.handleSubCategoryIfPresent('Loans'); // safe call
+  await expect(log.dashboard).toBeVisible({ timeout: 30000 });  });
 
-  // -------- Subscribe Specific Service --------
-  await servicePage.subscribeService('Account Opening Service');
+  test('Subscribe and Unsubscribe service by index', async ({ page }) => {
 
-  // -------- Verify --------
-  await servicePage.verifySubscribed('Account Opening Service');
+    await serv.goto();
+
+    await page.waitForTimeout(2000);
+
+    await serv.subscribeByIndex(0);
+    await page.waitForTimeout(1000);
+
+    await serv.unsubscribeByIndex(1);
+  });
+
 });

@@ -6,52 +6,37 @@ class AllBookPage {
     constructor(page) {
         this.page = page;
 
-        // ✅ Header (with count)
-        this.header=page.getByText("All Bookings");
-        this.allbook=page.getByRole("link", {name: "All Bookings"});
+        this.header = page.getByText("All Bookings");
+        this.allbook = page.getByRole("link", { name: "All Bookings" });
 
-        // ✅ Search
         this.searchbox = page.getByPlaceholder("Search by any field…");
 
-        // ✅ Table
         this.table = page.locator("table");
         this.rows = page.locator("tbody tr");
 
-        // ✅ Empty message
         this.emptyMsg = page.locator("text=/no.*booking.*display/i");
 
-        // ✅ Download
         this.downloadBtn = page.getByRole("button", { name: "Download Excel" });
+     this.update=page.getByRole("button",{"name":"Update Status"});
+     this.submit=page.getByRole("button",{"name":"Submit"});
     }
 
-    // =========================
-    // ✅ PAGE VALIDATION
-    // =========================
     async verifyPageLoaded() {
         await expect(this.header).toContainText("All Bookings");
         await expect(this.searchbox).toBeVisible();
         await expect(this.table).toBeVisible();
     }
 
-    // =========================
-    // ✅ COUNT FROM UI
-    // =========================
     async getBookingCountFromUI() {
         const text = await this.header.textContent();
         const match = text.match(/\((\d+)\)/);
         return match ? parseInt(match[1]) : 0;
     }
 
-    // =========================
-    // ✅ ROW COUNT
-    // =========================
     async getRowCount() {
         return await this.rows.count();
     }
 
-    // =========================
-    // ✅ COUNT + TABLE VALIDATION
-    // =========================
     async verifyCountAndData() {
         const uiCount = await this.getBookingCountFromUI();
         const rowCount = await this.getRowCount();
@@ -67,9 +52,6 @@ class AllBookPage {
         }
     }
 
-    // =========================
-    // 🔍 SEARCH
-    // =========================
     async search(query) {
         await this.searchbox.fill(query);
     }
@@ -78,7 +60,6 @@ class AllBookPage {
         await this.searchbox.fill("");
     }
 
-    // ✅ VALID SEARCH
     async verifySearchResult(query) {
         const count = await this.getRowCount();
 
@@ -89,20 +70,14 @@ class AllBookPage {
         }
     }
 
-    // ❌ INVALID SEARCH
     async verifyInvalidSearch() {
         await expect(this.emptyMsg).toBeVisible();
     }
 
-    // ⚠️ EDGE: Large input
     async searchLargeInput() {
-        const longText = "A".repeat(100);
-        await this.searchbox.fill(longText);
+        await this.searchbox.fill("A".repeat(100));
     }
 
-    // =========================
-    // 🔘 ACTION BUTTONS
-    // =========================
     async verifyActionButtons() {
         const count = await this.getRowCount();
 
@@ -112,19 +87,37 @@ class AllBookPage {
     }
 
     // =========================
-    // 👁 VIEW BOOKING
+    // 👁 VIEW UNPAID BOOKING (FIXED)
     // =========================
-    async clickViewFirstBooking() {
-        const count = await this.getRowCount();
+    async clickViewUnpaidBooking() {
+        const count = await this.rows.count();
 
-        if (count > 0) {
-            await this.rows.first().locator("button").first().click();
+        for (let i = 0; i < count; i++) {
+            const row = this.rows.nth(i);
+
+            // ✅ FIXED INDEX (Status = 4 from your table)
+            const status = await row.locator("td").nth(4).textContent();
+
+            if (!status) continue;
+
+            if (status.trim().toLowerCase() === "unpaid") {
+
+                console.log(`Unpaid booking found at row ${i}`);
+
+                // ✅ safest click (view icon)
+                await row.locator("button:has(svg)").click();
+
+                return;
+            }
         }
+
+        throw new Error("No unpaid booking found");
     }
 
     async verifyViewPageOpened() {
-        await expect(this.page).toHaveURL(/view|details/);
-    }
+    await expect(this.page).toHaveURL(/\/booking-management\/all-bookings\/.+/);
+    await expect(this.page.getByText("Booking Details")).toBeVisible();
+}
 
     // =========================
     // 📥 DOWNLOAD EXCEL
@@ -132,6 +125,7 @@ class AllBookPage {
     async downloadExcel() {
         const downloadPromise = this.page.waitForEvent("download");
         await this.downloadBtn.click();
+
         const download = await downloadPromise;
 
         const fileName = await download.suggestedFilename();
@@ -143,6 +137,13 @@ class AllBookPage {
         await download.saveAs(savePath);
 
         return savePath;
+    }
+    async updateStatus(){
+        await this.update.click();
+    }
+
+    async submitStatus(){
+        await this.submit.click();
     }
 }
 

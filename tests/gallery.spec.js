@@ -18,7 +18,7 @@ test.describe("provider gallery (dynamic)", () => {
     await log.login("neel@gmail.com", "Neel@123");
     await log.clicksignin();
 
-    await expect(page).toHaveURL("https://biz-booster-provider-panel.vercel.app/");
+    await expect(page).toHaveURL("https://provider.fetchtrue.com/");
   });
 
   // ✅ UPLOAD
