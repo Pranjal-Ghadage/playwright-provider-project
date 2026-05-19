@@ -31,11 +31,12 @@ test.describe("provider logout", () => {
 */
   test("logout", async ({ page }) => {
     await log.login("neel@gmail.com", "Neel@123");
+    await log.clickRememberMe();
     await log.clicksignin();
-    await expect(page).toHaveURL("https://provider.fetchtrue.com/",{timeout:20000});
+    await expect(page).toHaveURL("https://provider.fetchtrue.com/",{timeout:30000});
    // await dash.profilebutton();
       // this.logo = page.getByRole('link', { name: 'Logo' });
-      await dash.clicklogo()  ; 
+    await dash.clicklogo() ; 
     await logout.clickSignout();
     await expect(page).toHaveURL("https://provider.fetchtrue.com/signin",{timeout:30000});
   });

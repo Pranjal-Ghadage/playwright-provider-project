@@ -6,7 +6,7 @@ class provLogPage {
         this.username=page.locator("//input[@placeholder='info@gmail.com']");
         this.password=page.locator("//input[@placeholder='Enter your password']");
         this.signbutton=page.locator("//button[normalize-space()='Sign in']");
-        this.dashboard=page.locator("text=Dashboard");
+        this.dashboardText = page.locator("text=Dashboard");
 this.rememberMeCheckbox = this.page.locator("input[type='checkbox']").first();
     }
     async goto(){

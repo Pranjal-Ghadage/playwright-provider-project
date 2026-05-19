@@ -27,8 +27,7 @@ class provservicemanPage {
     this.submitBtn = page.getByRole('button', { name: 'Submit' });
 
     // ✅ Messages (IMPORTANT FIX)
-    this.successMsg = page.locator("text=Serviceman added successfully!");
-    this.errorMsg = page.locator("text=Email already exists");
+   this.successMsg = page.getByText(/Serviceman added successfully!/i);    this.errorMsg = page.locator("text=Email already exists");
   }
 
   async clickserviceMan() {

@@ -2,7 +2,7 @@ class ProfilePage {
   constructor(page) {
     this.page = page;
 
-    // ---------- PAGE READY ----------
+    this.userImage = page.getByAltText('User');
     this.profileHeading = page.getByText('Profile');
 
     // ---------- EDIT BUTTON ----------
@@ -30,7 +30,8 @@ class ProfilePage {
 
   // ---------- WAIT FOR PROFILE PAGE ----------
   async waitForProfilePage() {
-    await this.profileHeading.waitFor({ state: 'visible', timeout: 20000 });
+    await this.userImage.click();
+    await this.profileHeading.click();
   }
 
   // ---------- CLICK EDIT ----------

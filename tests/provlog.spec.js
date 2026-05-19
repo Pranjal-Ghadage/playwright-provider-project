@@ -16,25 +16,18 @@ test.describe("Provider Login", () => {
 test("valid login", async ({ page }) => {
 
   await log.handleLoginAlert();
-
   await log.login("neel@gmail.com", "Neel@123");
-
-  // ✅ FIX: click BEFORE signin
   await log.clickRememberMe();
-
   await log.clicksignin();
-
-  await expect(page).toHaveURL(
-    "https://provider.fetchtrue.com/",{ timeout: 20000 });
-
-  await expect(log.dashboard).toBeVisible({ timeout: 30000 });
-
+  await expect(page).toHaveURL("https://provider.fetchtrue.com/",{timeout:30000});
+  await expect(log.dashboardText).toBeVisible();
 });
 
   // ❌ INVALID USERNAME
   test("invalid username", async ({ page }) => {
     await log.handleLoginAlert("Login failed");
     await log.login("wrong@gmail.com", "Neel@123");
+    await log.clickRememberMe();
     await log.clicksignin();
     await page.pause();
   });
@@ -43,13 +36,17 @@ test("valid login", async ({ page }) => {
   test("invalid password", async ({ page }) => {
     await log.handleLoginAlert("Login failed");
     await log.login("neel@gmail.com", "Wrong@123");
+    await log.clickRememberMe();
     await log.clicksignin();
+    await page.pause();
+
   });
 
   // ❌ BOTH WRONG
   test("invalid username and password", async ({ page }) => {
     await log.handleLoginAlert("Login failed");
     await log.login("wrong@gmail.com", "Wrong@123");
+    await log.clickRememberMe();
     await log.clicksignin();
   });
 
@@ -57,6 +54,7 @@ test("valid login", async ({ page }) => {
   // ⚠️ EMPTY USERNAME (Browser validation)
   test("empty username", async({ page }) => {
     await log.login("", "Neel@123");
+    await log.clickRememberMe();
     await log.clicksignin();
 
     await log.verifyRequiredField(log.username);
@@ -66,6 +64,7 @@ test("valid login", async ({ page }) => {
   // ⚠️ EMPTY PASSWORD (Browser validation)
   test("empty password", async ({ page }) => {
     await log.login("neel@gmail.com", "");
+    await log.clickRememberMe();
     await log.clicksignin();
 
     await log.verifyRequiredField(log.password);
@@ -73,7 +72,8 @@ test("valid login", async ({ page }) => {
 
   // ⚠️ BOTH EMPTY
   test("empty username and password", async ({ page }) => {
-    await log.login("", "");
+    await log.login("", "");  
+    await log.clickRememberMe();
     await log.clicksignin();
 
     await log.verifyRequiredField(log.username);

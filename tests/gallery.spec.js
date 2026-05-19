@@ -18,7 +18,7 @@ test.describe("provider gallery (dynamic)", () => {
     await log.login("neel@gmail.com", "Neel@123");
     await log.clicksignin();
 
-    await expect(page).toHaveURL("https://provider.fetchtrue.com/");
+    await expect(page).toHaveURL("https://provider.fetchtrue.com/", {timeout:10000});
   });
 
   // ✅ UPLOAD
@@ -165,20 +165,21 @@ test.describe("provider gallery (dynamic)", () => {
   // ❌ CANCEL DELETE
   test("cancel delete image", async ({ page }) => {
 
-    page.on("dialog", async (d) => {
-      await d.dismiss();
-    });
-
-    await gall.gotogallery();
-    await gall.list();
-
-    const beforeCount = await gall.getCount();
-
-    await gall.deleteImageByIndex(0);
-
-    const afterCount = await gall.getCount();
-
-    expect(afterCount).toBe(beforeCount);
+  page.on("dialog", async (dialog) => {
+    await dialog.dismiss(); // click Cancel
   });
+
+  await gall.gotogallery();
+  await gall.list();
+
+  // store first image/text before delete
+  const firstImage = await gall.firstImageName.textContent();
+
+  await gall.deleteImageByIndex(0);
+
+  // verify image still exists
+  await expect(gall.firstImageName).toContainText(firstImage);
+
+});
 
 });

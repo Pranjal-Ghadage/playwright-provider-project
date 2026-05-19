@@ -1,4 +1,5 @@
 const { test, expect } = require("@playwright/test");
+
 const { provservicemanPage } = require("../pages/provservicemanPage");
 const { provLogPage } = require("../pages/provlogPage");
 
@@ -7,71 +8,166 @@ test.describe("Serviceman Module", () => {
   let log, serv;
 
   test.beforeEach(async ({ page }) => {
+
     log = new provLogPage(page);
     serv = new provservicemanPage(page);
 
     await log.goto();
+
     await log.login("neel@gmail.com", "Neel@123");
+
     await log.clicksignin();
 
-    await expect(page).toHaveURL("https://biz-booster-provider-panel.vercel.app/",{timeout:2000});
+    await expect(page).toHaveURL(
+      "https://provider.fetchtrue.com/",
+      { timeout: 30000 }
+    );
   });
 
   // ✅ UI validation
   test("service man page validation", async ({ page }) => {
+
     await serv.clickserviceMan();
 
     await expect(serv.addServiceman).toBeVisible();
+
     await expect(serv.servicemanlist).toBeVisible();
   });
 
-  // ✅ POSITIVE TEST (new email)
-  test("add serviceman with valid data", async ({ page }) => {
-    await serv.clickserviceMan();
-    await serv.clickaddServiceman();
+  
+// ✅ POSITIVE TEST
+   test("add serviceman with valid data", async ({ page }) => {
 
-    const email = `anjali${Date.now()}@test.com`; // 🔥 unique email
-
-    await serv.fillBasicDetails("anjali", "Sharma", "9876543288");
-    await serv.uploadProfile("tests/files/logo.png");
-
-    await serv.fillBusinessDetails("aadharcard", "123456789766");
-    await serv.uploadIdentity("tests/files/cover.png");
-
-    await serv.fillAccountDetails(email, "Test@823", "Test@823");
-
-    await serv.submitForm();
-
-    // ✅ VALIDATION (REAL)
-    await expect(serv.successMsg).toBeVisible();
-  });
-
-  // ❌ NEGATIVE TEST (duplicate email)
-  test("should show error if serviceman already exists", async ({ page }) => {
   await serv.clickserviceMan();
   await serv.clickaddServiceman();
 
-  const existingEmail = "anjali@test.com";
+  // Dynamic data
+  const email = `anjali${Date.now()}@test.com`;
 
-  await serv.fillBasicDetails("anjali", "Sharma", "9876543288");
+  const mobile = `98${Math.floor(Math.random() * 100000000)}`;
+
+  const aadhar = `${Math.floor(
+    100000000000 + Math.random() * 900000000000
+  )}`;
+
+  // ✅ Register dialog handler BEFORE action (IMPORTANT FIX)
+  const dialogPromise = page.waitForEvent("dialog");
+
+  // Basic Details
+  await serv.fillBasicDetails("anjali", "Sharma", mobile);
+
+  // Upload Profile
   await serv.uploadProfile("tests/files/logo.png");
 
-  await serv.fillBusinessDetails("aadharcard", "123456789766");
+  // Business Details
+  await serv.fillBusinessDetails("aadharcard", aadhar);
+
+  // Upload Identity
   await serv.uploadIdentity("tests/files/cover.png");
 
-  await serv.fillAccountDetails(existingEmail, "Test@823", "Test@823");
+  // Account Details
+  await serv.fillAccountDetails(email, "Test@823", "Test@823");
 
-  // 🔥 HANDLE ALERT (IMPORTANT)
-  page.once('dialog', async (dialog) => {
-    console.log("Alert:", dialog.message());
+  // Submit
+  await serv.submitForm();
 
-    // ✅ VALIDATE ERROR MESSAGE
-   // await expect(dialog.message().toLowerCase()).toContain("already");
-      await new Promise(resolve => setTimeout(resolve, 5000));
+  // ✅ Handle dialog properly
+  const dialog = await dialogPromise;
 
+  console.log("Success Message:", dialog.message());
+
+  expect(dialog.message()).toContain("Serviceman added successfully!");
+
+  await dialog.accept();
+
+  // Navigate to list
+  await serv.clickservicemandetails();
+
+  // Search
+  const searchBox = page.getByPlaceholder("Search");
+  await searchBox.fill(mobile);
+
+  // ✅ Better than waitForTimeout
+  const table = page.locator("table");
+
+  await expect(table).toContainText(mobile, {
+    timeout: 10000
+  });
+});
+
+
+  // ❌ NEGATIVE TEST
+  test("should show error if serviceman already exists", async ({ page }) => {
+
+    await serv.clickserviceMan();
+
+    await serv.clickaddServiceman();
+
+    const existingEmail = "anjali@test.com";
+
+    // Basic Details
+    await serv.fillBasicDetails(
+      "anjali",
+      "Sharma",
+      "9876543288"
+    );
+
+    // Upload Profile
+    await serv.uploadProfile(
+      "tests/files/logo.png"
+    );
+
+    // Business Details
+    await serv.fillBusinessDetails(
+      "aadharcard",
+      "123456789766"
+    );
+
+    // Upload Identity
+    await serv.uploadIdentity(
+      "tests/files/cover.png"
+    );
+
+    // Account Details
+    await serv.fillAccountDetails(
+      existingEmail,
+      "Test@823",
+      "Test@823"
+    );
+
+    // Handle Alert
+    page.once("dialog", async (dialog) => {
+
+      console.log(
+        "Alert Message:",
+        dialog.message()
+      );
+
+      // Validation
+      expect(
+        dialog.message().toLowerCase()
+      ).toContain("already");
+
+      // Accept Alert
+      await dialog.accept();
+    });
+
+    // Submit
+    await serv.submitForm();
   });
 
-  await serv.submitForm();
-});
+  // ✅ EMPTY FORM VALIDATION
+  test("should focus first name field when form is empty", async ({ page }) => {
+
+    await serv.clickserviceMan();
+
+    await serv.clickaddServiceman();
+
+    // Submit empty form
+    await serv.submitForm();
+
+    // Validation
+    await expect(serv.firstName).toBeFocused();
+  });
 
 });

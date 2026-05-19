@@ -1,45 +1,251 @@
-const { test } = require('@playwright/test');
-const { provLogPage } = require("../pages/provlogPage");
-const{provdashPage}=require("../pages/provdashPage");
+const { test, expect } = require('@playwright/test');
+
+const { provLogPage } = require('../pages/provlogPage');
+const { provdashPage } = require('../pages/provdashPage');
 const { ProfilePage } = require('../pages/profilePage');
 
-test('Update full profile', async ({ page }) => {
-  const log = new LoginPage(page);
-  const dash = new DashboardPage(page);
-  const profilePage = new ProfilePage(page);
+test.describe("Profile Module", () => {
 
-  // 1️ Login
-  await log.goto();
-  await log.login('neel@gmail.com', 'Neel@123');
+  let log, dash, profilePage;
 
-  // 2️⃣ Go to profile page
-  await dash.gotoProfile();
+  test.beforeEach(async ({ page }) => {
 
-  // 3️⃣ Wait for profile page
-  await profilePage.waitForProfilePage();
+    log = new provLogPage(page);
+    dash = new provdashPage(page);
+    profilePage = new ProfilePage(page);
 
-  // 4️⃣ Click Edit
-  await profilePage.clickEdit();
+    // ---------- LOGIN ----------
+    await log.goto();
 
-  // 5️⃣ Fill personal info
-  await profilePage.updatePersonalInfo(
-    'Neel',
-    'neel@gmail.com',
-    '8998674532'
-  );
+    await log.handleLoginAlert();
 
-  await profilePage.updateStoreInfo(
-  'Neel Store',
-  'store@gmail.com',
-  '9999999999',
-  'MG Road',
-  'Pune',
-  'Maharashtra',
-  'India'
-);
-  // 6️⃣ Save changes
-  await profilePage.clickUpdate();
+    await log.login(
+      "neel@gmail.com",
+      "Neel@123"
+    );
 
-  // Optional: wait 2 seconds to see the result
-  await page.waitForTimeout(2000);
+    await log.clickRememberMe();
+
+    await log.clicksignin();
+
+    await expect(page).toHaveURL(
+      "https://provider.fetchtrue.com/",
+      { timeout: 30000 }
+    );
+
+    await expect(log.dashboardText).toBeVisible();
+
+    // ---------- GO TO PROFILE ----------
+    await profilePage.waitForProfilePage();
+
+    await profilePage.clickEdit();
+  });
+
+  // =========================================================
+  // ✅ VALID PROFILE UPDATE
+  // =========================================================
+
+  test("valid profile update", async ({ page }) => {
+
+    await profilePage.updatePersonalInfo(
+      'Neel',
+      'neel@gmail.com',
+      '8998674532'
+    );
+
+    await profilePage.updateStoreInfo(
+      'Neel Store',
+      'store@gmail.com',
+      '9999999999',
+      'MG Road',
+      'Pune',
+      'Maharashtra',
+      'India'
+    );
+
+    await profilePage.updateProjectDetails(
+      '4',
+      '7'
+    );
+
+    await profilePage.updateAboutUs(
+      'We provide IT services'
+    );
+
+    await profilePage.clickUpdate();
+
+    await page.waitForTimeout(2000);
+  });
+
+  // =========================================================
+  // ❌ INVALID EMAIL
+  // =========================================================
+
+  test("should show error for invalid email", async ({ page }) => {
+
+    await profilePage.updatePersonalInfo(
+      'Neel',
+      'invalidemail',
+      '8998674532'
+    );
+
+    await profilePage.clickUpdate();
+
+    await expect(
+      page.getByText('Please enter a valid email')
+    ).toBeVisible();
+  });
+
+  // =========================================================
+  // ❌ INVALID PHONE
+  // =========================================================
+
+  test("should show error for invalid phone", async ({ page }) => {
+
+    await profilePage.updatePersonalInfo(
+      'Neel',
+      'neel@gmail.com',
+      '12345'
+    );
+
+    await profilePage.clickUpdate();
+
+    await expect(
+      page.getByText('Phone number must be exactly 10 digits')
+    ).toBeVisible();
+  });
+
+  // =========================================================
+  // ❌ EMPTY FULL NAME
+  // =========================================================
+
+  test("should show error for empty full name", async ({ page }) => {
+
+    await profilePage.updatePersonalInfo(
+      '',
+      'neel@gmail.com',
+      '8998674532'
+    );
+
+    await profilePage.clickUpdate();
+
+    await expect(
+      page.getByText('Full name is required')
+    ).toBeVisible();
+  });
+
+  // =========================================================
+  // ❌ EMPTY ADDRESS
+  // =========================================================
+
+  test("should show error for empty address", async ({ page }) => {
+
+    await profilePage.updateStoreInfo(
+      'Neel Store',
+      'store@gmail.com',
+      '9999999999',
+      '',
+      'Pune',
+      'Maharashtra',
+      'India'
+    );
+
+    await profilePage.clickUpdate();
+
+    await expect(
+      page.getByText('Address is required')
+    ).toBeVisible();
+  });
+
+  // =========================================================
+  // ❌ INVALID STORE EMAIL
+  // =========================================================
+
+  test("should show error for invalid store email", async ({ page }) => {
+
+    await profilePage.updateStoreInfo(
+      'Neel Store',
+      'invalidemail',
+      '9999999999',
+      'MG Road',
+      'Pune',
+      'Maharashtra',
+      'India'
+    );
+
+    await profilePage.clickUpdate();
+
+    await expect(
+      page.getByText('Please enter a valid email')
+    ).toBeVisible();
+  });
+
+  // =========================================================
+  // ❌ INVALID STORE PHONE
+  // =========================================================
+
+  test("should show error for invalid store phone", async ({ page }) => {
+
+    await profilePage.updateStoreInfo(
+      'Neel Store',
+      'store@gmail.com',
+      '123',
+      'MG Road',
+      'Pune',
+      'Maharashtra',
+      'India'
+    );
+
+    await profilePage.clickUpdate();
+
+    await expect(
+      page.getByText('Phone number must be exactly 10 digits')
+    ).toBeVisible();
+  });
+
+  // =========================================================
+  // ❌ INVALID PROJECT COUNT
+  // =========================================================
+
+  test("should not accept negative project count", async ({ page }) => {
+
+    await profilePage.updateProjectDetails(
+      '-1',
+      '7'
+    );
+
+    await profilePage.clickUpdate();
+
+    await page.waitForTimeout(1000);
+  });
+
+  // =========================================================
+  // ❌ INVALID EXPERIENCE
+  // =========================================================
+
+  test("should not accept negative experience", async ({ page }) => {
+
+    await profilePage.updateProjectDetails(
+      '4',
+      '-5'
+    );
+
+    await profilePage.clickUpdate();
+
+    await page.waitForTimeout(1000);
+  });
+
+  // =========================================================
+  // ❌ EMPTY ABOUT US
+  // =========================================================
+
+  test("should update with empty about us", async ({ page }) => {
+
+    await profilePage.updateAboutUs('');
+
+    await profilePage.clickUpdate();
+
+    await page.waitForTimeout(1000);
+  });
+
 });
