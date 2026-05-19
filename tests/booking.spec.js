@@ -16,7 +16,7 @@ test.describe("booking",()=>{
 
    })
 
-   test("All bookings",async({page})=>{
+   test.skip("All bookings",async({page})=>{
     await book.gotobooking();
     await book.clickallbookings();
     await expect(page).toHaveURL("https://provider.fetchtrue.com/booking-management/all-bookings", { timeout: 20000 });

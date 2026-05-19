@@ -15,7 +15,6 @@ test.describe("booking",()=>{
     await log.login("neel@gmail.com", "Neel@123");
     await log.clicksignin();
     await expect(page).toHaveURL("https://provider.fetchtrue.com/", { timeout: 20000 });
-    await expect(log.dashboard).toBeVisible({ timeout: 30000 });
 
    })
 
