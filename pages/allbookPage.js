@@ -18,6 +18,7 @@ class AllBookPage {
 
         this.downloadBtn = page.getByRole("button", { name: "Download Excel" });
      this.update=page.getByRole("button",{"name":"Update Status"});
+          this.Accept=page.getByRole("button",{"name":"Accept"});
      this.submit=page.getByRole("button",{"name":"Submit"});
     }
 

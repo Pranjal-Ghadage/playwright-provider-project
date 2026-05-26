@@ -1,9 +1,5 @@
-// @ts-check
 import { defineConfig, devices } from '@playwright/test';
 
-/**
- * @see https://playwright.dev/docs/test-configuration
- */
 export default defineConfig({
   testDir: './tests',
 
@@ -11,21 +7,33 @@ export default defineConfig({
 
   forbidOnly: !!process.env.CI,
 
-  retries: process.env.CI ? 2 : 0,
+  retries: process.env.CI ? 2 : 1,
 
   workers: process.env.CI ? 1 : undefined,
 
-  reporter: 'html',
+  reporter: [
+    ['html'],
+    ['list']
+  ],
+
+  timeout: 30000,
+
+  expect: {
+    timeout: 5000,
+  },
 
   use: {
-    // ✅ BASE URL ADDED
     baseURL: 'https://provider.fetchtrue.com/',
 
     trace: 'on-first-retry',
+    video: 'retain-on-failure',
+    screenshot: 'only-on-failure',
 
-    headless: process.env.CI ? true : false,
+    headless: !!process.env.CI,
 
-    slowMo: process.env.CI ? 0 : 500,
+    actionTimeout: 15000,
+
+    navigationTimeout: 30000,
   },
 
   projects: [

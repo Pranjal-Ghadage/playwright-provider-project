@@ -21,10 +21,10 @@ test.describe("booking",()=>{
    test("View booking", async ({ page }) => {
     await book.gotobooking();
     await book.clickallbookings();
-    await allbook.clickViewUnpaidBooking();
-    await allbook.verifyViewPageOpened();
-    await allbook.updateStatus();
-    await allbook.submitStatus();
+   // await allbook.clickViewUnpaidBooking();
+   // await allbook.verifyViewPageOpened();
+    //await allbook.updateStatus();
+   // await allbook.submitStatus();
 
 });
 

@@ -53,19 +53,29 @@ class galleryPage {
     await card.locator("button", { hasText: "Delete" }).click();
   }
 
-  async replaceImageByIndex(index, filePath) {
-    const card = this.cards.nth(index);
+ async replaceImageByIndex(index, filePath) {
 
-    await card.locator("button", { hasText: "Replace" }).click();
+  const card = this.cards.nth(index);
 
-    const fileInput = card.locator('input[type="file"]');
-    await fileInput.setInputFiles(filePath);
-  }
+  const fileInput = card.locator(
+    'input[type="file"]'
+  );
 
-  async getImageSrcByIndex(index) {
-    const card = this.cards.nth(index);
-    return await card.locator("img").getAttribute("src");
-  }
+  await fileInput.setInputFiles(filePath);
+
+  await card
+    .getByRole("button", { name: "Replace" })
+    .click();
+}
+
+async getImageSrcByIndex(index) {
+
+  const card = this.cards.nth(index);
+
+  return await card
+    .locator("img")
+    .getAttribute("src");
+}
 }
 
 module.exports = { galleryPage };

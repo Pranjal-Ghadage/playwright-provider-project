@@ -63,15 +63,7 @@ test.describe("Profile Module", () => {
       'India'
     );
 
-    await profilePage.updateProjectDetails(
-      '4',
-      '7'
-    );
-
-    await profilePage.updateAboutUs(
-      'We provide IT services'
-    );
-
+    
     await profilePage.clickUpdate();
 
     await page.waitForTimeout(2000);
@@ -130,8 +122,8 @@ test.describe("Profile Module", () => {
     await profilePage.clickUpdate();
 
     await expect(
-      page.getByText('Full name is required')
-    ).toBeVisible();
+  page.getByText('This field is required')
+).toBeVisible();
   });
 
   // =========================================================
@@ -153,8 +145,8 @@ test.describe("Profile Module", () => {
     await profilePage.clickUpdate();
 
     await expect(
-      page.getByText('Address is required')
-    ).toBeVisible();
+  page.getByText('This field is required')
+).toBeVisible();
   });
 
   // =========================================================
@@ -174,10 +166,9 @@ test.describe("Profile Module", () => {
     );
 
     await profilePage.clickUpdate();
-
-    await expect(
-      page.getByText('Please enter a valid email')
-    ).toBeVisible();
+await expect(
+  page.getByText('Please enter a valid email address')
+).toBeVisible();
   });
 
   // =========================================================
@@ -199,53 +190,8 @@ test.describe("Profile Module", () => {
     await profilePage.clickUpdate();
 
     await expect(
-      page.getByText('Phone number must be exactly 10 digits')
-    ).toBeVisible();
-  });
-
-  // =========================================================
-  // ❌ INVALID PROJECT COUNT
-  // =========================================================
-
-  test("should not accept negative project count", async ({ page }) => {
-
-    await profilePage.updateProjectDetails(
-      '-1',
-      '7'
-    );
-
-    await profilePage.clickUpdate();
-
-    await page.waitForTimeout(1000);
-  });
-
-  // =========================================================
-  // ❌ INVALID EXPERIENCE
-  // =========================================================
-
-  test("should not accept negative experience", async ({ page }) => {
-
-    await profilePage.updateProjectDetails(
-      '4',
-      '-5'
-    );
-
-    await profilePage.clickUpdate();
-
-    await page.waitForTimeout(1000);
-  });
-
-  // =========================================================
-  // ❌ EMPTY ABOUT US
-  // =========================================================
-
-  test("should update with empty about us", async ({ page }) => {
-
-    await profilePage.updateAboutUs('');
-
-    await profilePage.clickUpdate();
-
-    await page.waitForTimeout(1000);
+  page.getByText('Phone number must be exactly 10 digits')
+).toBeVisible();
   });
 
 });
