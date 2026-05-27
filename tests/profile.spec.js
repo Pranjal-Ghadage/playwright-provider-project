@@ -111,21 +111,20 @@ test.describe("Profile Module", () => {
   // ❌ EMPTY FULL NAME
   // =========================================================
 
-  test("should show error for empty full name", async ({ page }) => {
+ test("should show error for empty full name", async ({ page }) => {
 
-    await profilePage.updatePersonalInfo(
-      '',
-      'neel@gmail.com',
-      '8998674532'
-    );
+  await profilePage.updatePersonalInfo(
+    '',
+    'neel@gmail.com',
+    '8998674532'
+  );
 
-    await profilePage.clickUpdate();
+  await profilePage.clickUpdate();
 
-    await expect(
-  page.getByText('This field is required')
-).toBeVisible();
-  });
-
+  await expect(
+    page.getByTestId('full-name-error')
+  ).toBeVisible();
+});
   // =========================================================
   // ❌ EMPTY ADDRESS
   // =========================================================
