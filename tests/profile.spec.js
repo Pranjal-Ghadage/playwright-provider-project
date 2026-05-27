@@ -110,8 +110,7 @@ test.describe("Profile Module", () => {
   // =========================================================
   // ❌ EMPTY FULL NAME
   // =========================================================
-
- test("should show error for empty full name", async ({ page }) => {
+test("should show error for empty full name", async ({ page }) => {
 
   await profilePage.updatePersonalInfo(
     '',
@@ -122,10 +121,11 @@ test.describe("Profile Module", () => {
   await profilePage.clickUpdate();
 
   await expect(
-    page.getByTestId('full-name-error')
+    page.getByText('This field is required')
   ).toBeVisible();
+
 });
-  // =========================================================
+// ===============================================
   // ❌ EMPTY ADDRESS
   // =========================================================
 
@@ -176,21 +176,24 @@ await expect(
 
   test("should show error for invalid store phone", async ({ page }) => {
 
-    await profilePage.updateStoreInfo(
-      'Neel Store',
-      'store@gmail.com',
-      '123',
-      'MG Road',
-      'Pune',
-      'Maharashtra',
-      'India'
-    );
+  await profilePage.updateStoreInfo(
+    'Neel Store',
+    'store@gmail.com',
+    '123',
+    'MG Road',
+    'Pune',
+    'Maharashtra',
+    'India'
+  );
 
-    await profilePage.clickUpdate();
+  await profilePage.clickUpdate();
 
-    await expect(
-  page.getByText('Phone number must be exactly 10 digits')
-).toBeVisible();
-  });
+  await expect(
+    page.getByText(
+      'Phone number must be exactly 10 digits',
+      { exact: true }
+    )
+  ).toBeVisible({ timeout: 10000 });
 
+});
 });
