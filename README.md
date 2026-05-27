@@ -3,7 +3,7 @@
 ## 📌 Project Overview
 
 This project is an end-to-end automation framework built using Playwright.
-It covers real-time scenarios such as login, dashboard validation, and booking workflows.
+It automates real-world workflows including authentication, dashboard validation, booking management, serviceman management, profile validations, and file handling.
 
 The framework follows the **Page Object Model (POM)** design pattern to ensure better code reusability, maintainability, and scalability.
 
@@ -39,11 +39,14 @@ playwright-provider-project
 ## ✅ Features Covered
 
 * 🔐 Login & Logout automation
-* ❌ Login error validation (invalid credentials, empty fields)
+* ❌ Login validation (invalid credentials, empty fields)
+* 👤 Profile form validation testing
+* 👨‍🔧 Serviceman module automation
 * ⚠️ Alert handling (browser alerts, confirmations)
 * 📊 Dashboard validation
 * 📅 Booking workflow automation
-* 📄 PDF download validation
+* 🔍 Booking search functionality
+* 📄 Excel/PDF download validation
 * 🖼️ Image upload & download handling
 * ♻️ Reusable Page Object Model implementation
 
